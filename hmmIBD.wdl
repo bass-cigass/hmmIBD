@@ -53,14 +53,14 @@ task run_hmmIBD {
     }
     command {
     set -euxo pipefail #if any of the command fails then the entire worfklow fails
-    ./hmmIBD -i ~{data} ~{'-f '+freqData} -o ~{output_pfx}
+    hmmIBD -i ~{data} ~{'-f '+freqData} -o ~{output_pfx}
     }
     
     runtime {
     docker: "basscigass/hmmibd:1.0.8"
     memory: 16+ " GiB"
     disks: "local-disk 50 HDD"
-    cpu_cores: 4
+    cpu: 4
     preemptible: 0
     }
     
@@ -87,7 +87,7 @@ task prepareData {
     runtime {
     docker: "basscigass/hmmibd:1.0.8"
     memory: 32+ " GiB"
-    cpu_cores: 8
+    cpu: 8
     disks: "local-disk 50 HDD"
     preemptible: 0
     }
