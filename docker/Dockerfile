@@ -3,6 +3,8 @@ RUN apk add --no-cache build-base
 RUN apk add --no-cache --upgrade bash
 RUN apk add --no-cache python3 py3-pip
 
+RUN apk add --no-cache python3-dev
+
 RUN pip install matplotlib
 RUN pip install numpy
 RUN pip install seaborn

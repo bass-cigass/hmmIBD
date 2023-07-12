@@ -30,6 +30,16 @@ workflow hmmIBD{
     output {
     File out1 = run_hmmIBD.output1
     File out2 = run_hmmIBD.output2
+    File samp_het = prepareData.samp_het
+    File all_mono_samples = prepareData.all_mono_samples
+    File all_poly_samples = prepareData.all_poly_samples
+    File bad_mono_samples = prepareData.bad_mono_samples
+    File good_mono_samples = prepareData.good_mono_samples
+    File good_poly_samples = prepareData.good_poly_samples
+    File good_samples = prepareData.good_samples
+    File gendata = prepareData.gendata
+    File allele = prepareData.allele
+    File hetrate = prepareData.hetrate
 
   }
 }
@@ -48,9 +58,9 @@ task run_hmmIBD {
     
     runtime {
     docker: "basscigass/hmmibd:1.0.8"
-    memory: 10+ " GiB"
+    memory: 16+ " GiB"
     disks: "local-disk 50 HDD"
-    cpu_cores: 8
+    cpu_cores: 4
     preemptible: 0
     }
     
@@ -77,6 +87,7 @@ task prepareData {
     runtime {
     docker: "basscigass/hmmibd:1.0.8"
     memory: 32+ " GiB"
+    cpu_cores: 8
     disks: "local-disk 50 HDD"
     preemptible: 0
     }
@@ -91,5 +102,6 @@ task prepareData {
     File good_samples = "output/good_samples.txt"
     File gendata = "seq/seq.txt"
     File allele = "seq/allele.txt"
+    File hetrate = "results/hetrate.pdf"
     }
 }
