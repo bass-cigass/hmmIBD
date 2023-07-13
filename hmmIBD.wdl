@@ -9,6 +9,7 @@ workflow hmmIBD{
   input {
     #String sample_name 
     File vcfFile
+    File? snplist_preferred
     File? freqData
     String output_pfx = "hmm"
     
@@ -16,7 +17,8 @@ workflow hmmIBD{
 
   call prepareData{
     input: 
-    vcf = vcfFile
+    vcf = vcfFile,
+    snplist = snplist_preferred
   }
 
   call run_hmmIBD {
@@ -73,14 +75,26 @@ task prepareData {
     input {
     # Command parameters
     File vcf
+    File? snplist
     }
+    String filename = 'output/cleaned_vcf.vcf'
+    Boolean hasSnp = defined(snplist)
     command {
       set -euxo pipefail #if any of the command fails then the entire worfklow fails
       mkdir 'output'
       mkdir 'seq'
       mkdir 'results'
-      python /py/vcf2het.py ~{vcf}
-      python /py/vcf2hmm.py ~{vcf}
+
+      if ~{hasSnp} ; then
+        python /py/clean_vcf.py ~{vcf} ~{filename} ~{snplist}
+        python /py/vcf2het.py ~{filename}
+        python /py/vcf2hmm.py ~{filename}
+      else
+        python /py/vcf2het.py ~{vcf}
+        python /py/vcf2hmm.py ~{vcf}
+        touch ~{filename}
+      fi
+      
       python /py/hetrate.py output/samp_het.txt
     }
     
@@ -103,5 +117,6 @@ task prepareData {
     File gendata = "seq/seq.txt"
     File allele = "seq/allele.txt"
     File hetrate = "results/hetrate.pdf"
+    File cleaned_vcf = "output/cleaned_vcf.vcf"
     }
 }
