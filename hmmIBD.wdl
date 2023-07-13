@@ -88,10 +88,10 @@ task prepareData {
       if ~{hasSnp} ; then
         python /py/clean_vcf.py ~{vcf} ~{filename} ~{snplist}
         python /py/vcf2het.py ~{filename}
-        python /py/vcf2hmm.py ~{filename}
+        python /py/vcf2hmm.py ~{filename} output/good_mono_samples.txt
       else
         python /py/vcf2het.py ~{vcf}
-        python /py/vcf2hmm.py ~{vcf}
+        python /py/vcf2hmm.py ~{vcf} output/good_mono_samples.txt
         touch ~{filename}
       fi
       
