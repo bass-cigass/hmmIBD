@@ -51,8 +51,13 @@ def main() :
   for line in hetf :
     pieces = line.rstrip().split()
     samp = pieces[0]
-    year = samp.split('-')[2]
-    site = samp.split('-')[1]
+    if '-' in samp:
+      year = samp.split('-')[2]
+      site = samp.split('-')[1]
+    else :
+      year = samp.split('_')[2]
+      site = samp.split('_')[1]
+    
     nhet = int(pieces[ idx['N_hetcall'] ])
     ntot = int(pieces[ idx['N_call'] ])
     if ntot == 0 : continue
