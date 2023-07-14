@@ -12,13 +12,15 @@ workflow hmmIBD{
     File? snplist_preferred
     File? freqData
     String output_pfx = "hmm"
+    Boolean onlyGoodSamples = true
     
   }
 
   call prepareData{
     input: 
     vcf = vcfFile,
-    snplist = snplist_preferred
+    snplist = snplist_preferred,
+    onlyGoodSamples = onlyGoodSamples
   }
 
   call run_hmmIBD {
@@ -76,6 +78,7 @@ task prepareData {
     # Command parameters
     File vcf
     File? snplist
+    Boolean onlyGoodSamples = true
     }
     String filename = 'output/cleaned_vcf.vcf'
     Boolean hasSnp = defined(snplist)
@@ -89,11 +92,11 @@ task prepareData {
         python /py/clean_vcf.py ~{vcf} ~{filename} ~{snplist}
         python /py/vcf2het.py ~{filename}
         python /py/hetrate.py output/samp_het.txt
-        python /py/vcf2hmm.py ~{filename} output/good_mono_samples.txt
+        python /py/vcf2hmm.py ~{filename} ~{false="" true = "output/good_mono_samples.txt" onlyGoodSamples}
       else
         python /py/vcf2het.py ~{vcf}
         python /py/hetrate.py output/samp_het.txt
-        python /py/vcf2hmm.py ~{vcf} output/good_mono_samples.txt
+        python /py/vcf2hmm.py ~{vcf} ~{false="" true = "output/good_mono_samples.txt" onlyGoodSamples}
         touch ~{filename}
       fi
     }
