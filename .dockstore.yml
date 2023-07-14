@@ -3,3 +3,6 @@ workflows:
 - name: HMMIBD
   subclass: wdl
   primaryDescriptorPath: /hmmIBD.wdl
+- name: HMMIBD_OUTPUT_ANALYSIS
+  subclass: wdl
+  primaryDescriptorPath: /hmmIBD_Output_Analysis.wdl

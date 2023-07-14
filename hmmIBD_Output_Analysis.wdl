@@ -2,7 +2,7 @@ version 1.0
 
 ## 
 # WORKFLOW DEFINITION
-workflow hmmIBD{
+workflow hmmIBD_Output_Analysis{
   input {
     File hmm_File
     File hmm_fract_File
