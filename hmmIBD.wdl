@@ -32,8 +32,8 @@ workflow hmmIBD{
   
   # Outputs that will be retained when execution is complete
     output {
-    File out1 = run_hmmIBD.output1
-    File out2 = run_hmmIBD.output2
+    File hmm_fract = run_hmmIBD.hmm_fract
+    File hmm_file = run_hmmIBD.hmm_file
     File samp_het = prepareData.samp_het
     File all_mono_samples = prepareData.all_mono_samples
     File all_poly_samples = prepareData.all_poly_samples
@@ -69,8 +69,8 @@ task run_hmmIBD {
     }
     
     output {
-    File output1 = output_pfx +".hmm_fract.txt"
-    File output2 = output_pfx +".hmm.txt"
+    File hmm_fract = output_pfx +".hmm_fract.txt"
+    File hmm_file = output_pfx +".hmm.txt"
     }
 }
 task prepareData {
