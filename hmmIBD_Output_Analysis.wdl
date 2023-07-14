@@ -30,6 +30,7 @@ task run_Pileup {
     }
     command {
     set -euxo pipefail #if any of the command fails then the entire worfklow fails
+    mkdir 'output'
     python /py/pileup.py ~{hmm_File} ~{hmm_fract_File} "output/result_plot.pdf"
     }
     
