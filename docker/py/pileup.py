@@ -10,7 +10,7 @@ import sys
 
 def main() :
   
-  if len(sys.argv) != 4 : sys.exit('usage: pileup.py <hmm fraction file> <hmm file> <pdf output file>')
+  if len(sys.argv) != 4 : sys.exit('usage: pileup.py <hmm file> <hmm fraction file> <pdf output file>')
   infile = sys.argv[1]
   fractfile = sys.argv[2]
   pdf_file = sys.argv[3]
@@ -22,6 +22,7 @@ def main() :
   nchrom = 14
 
   rels = set()
+  nonrels = set()
   with open(fractfile, 'r') as fractf :
     head = fractf.readline().rstrip().split()
     idx = {col : i for i, col in enumerate(head)}
@@ -31,9 +32,9 @@ def main() :
       samp2 = pieces[idx['sample2']]
       fIBD = float(pieces[idx['fract_sites_IBD']])
       if fIBD > 0.98 : continue
-      if fIBD > 0.05 : 
-        rels.add( (samp1, samp2) )
-  
+      if fIBD > 0.05 : rels.add( (samp1, samp2) )
+      else : nonrels.add( (samp1, samp2) )
+      
   ntot_nonrel = ntot_rel = 0
   chr_ends = Counter()
   with open(infile, 'r') as inf :
@@ -58,7 +59,7 @@ def main() :
       s2 = pieces[idx['sample2']]
       if s1 != olds1 or s2 != olds2 :
         if (s1, s2) in rels : ntot_rel += 1
-        else : ntot_nonrel += 1
+        elif (s1, s2) in nonrels : ntot_nonrel += 1
 
       olds1 = s1
       olds2 = s2
@@ -71,11 +72,11 @@ def main() :
       if (s1, s2) in rels :
         for i in range(bin_start, bin_end+1) :
           depth_rel[chr][i] += 1
-      else :
+      elif (s1, s2) in nonrels :
         for i in range(bin_start, bin_end+1) :
           depth[chr][i] += 1
 
-  print('relative, non-relative pairs', ntot_nonrel, ntot_rel)
+  print('relative, non-relative pairs', ntot_rel, ntot_nonrel)
 
   for chrom in range(1, 15) :
     xs = [(x+.5)*binsize/1000000 for x in range(len(depth_rel[chrom])) ]
