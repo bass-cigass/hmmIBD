@@ -1,6 +1,5 @@
 version 1.0
 
-## 
 # WORKFLOW DEFINITION
 workflow hmmIBD_CleanVCF{
   input {
