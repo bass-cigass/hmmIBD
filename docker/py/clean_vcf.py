@@ -56,7 +56,7 @@ def main() :
       if filter_state != 'PASS' :
         continue
       # Handle falciparum chrom names
-      match = re.search(r'^Pf3D7_(\d+)_v3', chrom_str)
+      match = re.search(r'^Pf3D7[_\-](\d+)[_\-]v3', chrom_str)
       if match :
         chrom = int(match.group(1))
       else :
