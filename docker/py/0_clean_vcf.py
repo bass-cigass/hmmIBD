@@ -18,7 +18,7 @@ def main() :
   with open(goodfile, 'r') as goodf :
     for line in goodf :
       pieces = line.rstrip().split('\t')
-      good_sites.add( (int(pieces[0]), int(pieces[1])) ) # chrom, pos as ints
+      good_sites.add( (pieces[0], pieces[1]) ) # chrom, pos as strings
     
   
   # Decide whether the file is compressed or not, and open it accordingly
@@ -30,7 +30,6 @@ def main() :
   samples = []
   
   nline = 0
-  init_format = False
   with open(outfile, 'w') as outf :
     for line in inf :
       if re.match(r'\#CHROM', line) :
@@ -48,45 +47,20 @@ def main() :
         continue
       
       # data line
-      line = line.rstrip()
       nline += 1
-      pieces = line.split('\t')
-      chrom_str = pieces[0]
+      pieces = line.rstrip().split('\t')
+      chrom = pieces[0]
       filter_state = pieces[6]
       if filter_state != 'PASS' :
         continue
       # Handle falciparum chrom names
-      match = re.search(r'^Pf3D7_(\d+)_v3', chrom_str)
+      match = re.search(r'^Pf3D7_(\d+)_v3', chrom)
       if match :
-        chrom = int(match.group(1))
+        chrom = match.group(1)
       else :
         continue
-      pos = int(pieces[1])
+      pos = pieces[1]
       if (chrom, pos) not in good_sites : continue
-      genotypes = pieces[9:]
-
-      # Fix the 0/0 depth=0 awkwardness
-      outline = '\t'.join(pieces[:9])
-      for isamp, samp in enumerate(samples) :
-        field = genotypes[isamp]
-        genotype = field.split(':')
-      
-        if not init_format :
-          init_format = True
-          formats = pieces[8].split(':')
-          for iform, form in enumerate(formats) :
-            if form == 'GT' :
-              gt_idx = iform
-            elif form == 'DP' :
-              dp_idx = iform
-        
-        if genotype[dp_idx] == '.' :
-          depth = 0
-        else :
-          depth = int(genotype[dp_idx])
-        if depth == 0 :
-          field = re.sub('^0[\/|]0', './.', field)
-        outline += ('\t' + field)
-      print(outline, file=outf)
+      print(line, end='', file=outf)
       
 main()

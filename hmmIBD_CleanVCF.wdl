@@ -15,7 +15,7 @@ workflow hmmIBD_CleanVCF{
   
   # Outputs that will be retained when execution is complete
     output {
-    File result = clean.cleaned_vcf
+    File cleaned_vcf = clean.cleaned_vcf
 
   }
 }
