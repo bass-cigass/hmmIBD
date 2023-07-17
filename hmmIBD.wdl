@@ -9,17 +9,15 @@ workflow hmmIBD{
   input {
     #String sample_name 
     File vcfFile
-    File? snplist_preferred
     File? freqData
     String output_pfx = "hmm"
     Boolean onlyGoodSamples = true
     
   }
-
+  
   call prepareData{
     input: 
     vcf = vcfFile,
-    snplist = snplist_preferred,
     onlyGoodSamples = onlyGoodSamples
   }
 
@@ -47,7 +45,8 @@ workflow hmmIBD{
 
   }
 }
-# Align a pair of FASTQs and output a bam file
+# Task run_hmmIBD will run the hmmIBD scipt with 2 required arguments: the vcf file (data) and the prefix of the output files (output_pfx)
+# One optional argument can be provided: freqData
 task run_hmmIBD {
     input {
     # Command parameters
@@ -77,28 +76,19 @@ task prepareData {
     input {
     # Command parameters
     File vcf
-    File? snplist
     Boolean onlyGoodSamples = true
     }
-    String filename = 'output/cleaned_vcf.vcf'
-    Boolean hasSnp = defined(snplist)
+    
     command {
       set -euxo pipefail #if any of the command fails then the entire worfklow fails
-      mkdir 'output'
-      mkdir 'seq'
-      mkdir 'results'
+      mkdir -p 'output'
+      mkdir -p 'seq'
+      mkdir -p 'results'
 
-      if ~{hasSnp} ; then
-        python /py/clean_vcf.py ~{vcf} ~{filename} ~{snplist}
-        python /py/vcf2het.py ~{filename}
-        python /py/hetrate.py output/samp_het.txt
-        python /py/vcf2hmm.py ~{filename} ~{false="" true = "output/good_mono_samples.txt" onlyGoodSamples}
-      else
-        python /py/vcf2het.py ~{vcf}
-        python /py/hetrate.py output/samp_het.txt
-        python /py/vcf2hmm.py ~{vcf} ~{false="" true = "output/good_mono_samples.txt" onlyGoodSamples}
-        touch ~{filename}
-      fi
+      python /py/vcf2het.py ~{vcf}
+      python /py/hetrate.py output/samp_het.txt
+      python /py/vcf2hmm.py ~{vcf} ~{false="" true = "output/good_mono_samples.txt" onlyGoodSamples}
+    
     }
     
     runtime {
@@ -120,6 +110,5 @@ task prepareData {
     File gendata = "seq/seq.txt"
     File allele = "seq/allele.txt"
     File hetrate = "results/hetrate.pdf"
-    File cleaned_vcf = "output/cleaned_vcf.vcf"
     }
 }
