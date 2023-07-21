@@ -10,7 +10,11 @@ import sys
 
 def main() :
 
-  het_thresh = .002   # current definition of polygenomic
+  
+  het_thresh = .002   # current definition of polygenomic (try 0.06 for more monogenomics sample)
+  if len(sys.argv) == 3 : 
+    het_thresh = float(sys.argv[1])
+    print('runing heterate with threshold '+het_thresh)
   cover_thresh = 0.25   # current def of good sample -- threshold on fraction of genome >= 5x cover
   cols = sns.color_palette("colorblind", n_colors=3)
   
