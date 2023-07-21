@@ -3,9 +3,9 @@ workflows:
 - name: HMMIBD
   subclass: wdl
   primaryDescriptorPath: /hmmIBD.wdl
-- name: HMMIBD_OUTPUT_ANALYSIS
+- name: HMMIBD_OUTPUTS_VISUALIZATION
   subclass: wdl
-  primaryDescriptorPath: /hmmIBD_Output_Analysis.wdl
+  primaryDescriptorPath: /hmmIBD_Outputs_Visualization.wdl
 - name: HMMIBD_CLEAN_VCF
   subclass: wdl
   primaryDescriptorPath: /hmmIBD_CleanVCF.wdl

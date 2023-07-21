@@ -2,7 +2,7 @@ version 1.0
 
 ## 
 # WORKFLOW DEFINITION
-workflow hmmIBD_Output_Analysis{
+workflow hmmIBD_Outputs_Visualization{
   input {
     File hmm_File
     File hmm_fract_File
@@ -14,10 +14,15 @@ workflow hmmIBD_Output_Analysis{
     hmm_File = hmm_File,
     hmm_fract_File = hmm_fract_File,
   }
+  call plot_IBD{
+    input: 
+    hmm_fract_File = hmm_fract_File,
+  }
   
   # Outputs that will be retained when execution is complete
     output {
     File result = run_Pileup.result
+    File plotIBD = plot_IBD.plot
 
   }
 }
@@ -30,7 +35,7 @@ task run_Pileup {
     }
     command {
     set -euxo pipefail #if any of the command fails then the entire worfklow fails
-    mkdir 'output'
+    mkdir -p 'output'
     python /py/pileup.py ~{hmm_File} ~{hmm_fract_File} "output/result_plot.pdf"
     }
     
@@ -44,6 +49,30 @@ task run_Pileup {
     
     output {
     File result = "output/result_plot.pdf"
+    
+    }
+}
+task plot_IBD {
+    input {
+    File hmm_fract_File
+     
+    }
+    command {
+    set -euxo pipefail #if any of the command fails then the entire worfklow fails
+    mkdir - 'results'
+    python /py/plot_ibd.py ~{hmm_fract_File} 
+    }
+    
+    runtime {
+    docker: "basscigass/hmmibd:1.0.8"
+    memory: 8+ " GiB"
+    disks: "local-disk 50 HDD"
+    cpu: 4
+    preemptible: 0
+    }
+    
+    output {
+    File plot = "results/plot_ibd.pdf"
     
     }
 }

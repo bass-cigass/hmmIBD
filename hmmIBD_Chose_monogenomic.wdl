@@ -25,7 +25,7 @@ workflow hmmIBD_Chose_monogenomic{
     File good_mono_samples = DecideMonogenomic.good_mono_samples
     File good_poly_samples = DecideMonogenomic.good_poly_samples
     File good_samples = DecideMonogenomic.good_samples
-    File gendata = DecideMonogenomic.gendata
+    File gendata = DecideMonogenomic.genotype_data
     File allele = DecideMonogenomic.allele
     File hetrate = DecideMonogenomic.hetrate
 
@@ -49,6 +49,7 @@ task DecideMonogenomic {
       python /py/vcf2het.py ~{vcf}
       python /py/hetrate.py ~{het_thresh} output/samp_het.txt 
       python /py/vcf2hmm.py ~{vcf} ~{false="" true = "output/good_mono_samples.txt" onlyGoodSamples}
+      python /py/thin_seq.py "thinned_sites.txt" "seq/seq.txt" "seq/thin_seq.txt"
     
     }
     
@@ -68,7 +69,7 @@ task DecideMonogenomic {
     File good_mono_samples = "output/good_mono_samples.txt"
     File good_poly_samples = "output/good_poly_samples.txt"
     File good_samples = "output/good_samples.txt"
-    File gendata = "seq/seq.txt"
+    File genotype_data = "seq/thin_seq.txt"
     File allele = "seq/allele.txt"
     File hetrate = "results/hetrate.pdf"
     }
