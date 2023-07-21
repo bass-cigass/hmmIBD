@@ -11,4 +11,4 @@ workflows:
   primaryDescriptorPath: /hmmIBD_CleanVCF.wdl
 - name: HMMIBD_CHOSE_MONOGENOMIC
   subclass: wdl
-  primaryDescriptorPath: /hmmIBD_Chose_monogenomic
+  primaryDescriptorPath: /hmmIBD_Chose_monogenomic.wdl
