@@ -51,9 +51,8 @@ task remove_sweeps {
     }
     command {
     set -euxo pipefail #if any of the command fails then the entire worfklow fails
-    mkdir -p 'seq'
 
-    python /py/remove_sweeps.py ~{infile} "seq/"+output_file
+    python /py/remove_sweeps.py ~{infile} ~{output_file}
     }
     #runtime configuration
     runtime {
@@ -65,7 +64,7 @@ task remove_sweeps {
     }
     
     output {
-    File sweeps_removed = "seq/"+output_file
+    File sweeps_removed = output_file
     }
 }
 
