@@ -53,7 +53,7 @@ def main() :
       pieces = line.split('\t')
       chrom_str = pieces[0]
       filter_state = pieces[6]
-      if filter_state != 'PASS' :
+      if 'PASS' not in filter_state :
         continue
       # Handle falciparum chrom names
       match = re.search(r'^Pf3D7[_\-](\d+)[_\-]v3', chrom_str)

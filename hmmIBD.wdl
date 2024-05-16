@@ -1,8 +1,4 @@
 version 1.0
-
-## Input:vcfFile, output_pfx
-
-## Outputs :
 ## 
 # WORKFLOW DEFINITION
 workflow hmmIBD{

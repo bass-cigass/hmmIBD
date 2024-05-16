@@ -21,8 +21,8 @@ workflow hmmIBD_Outputs_Visualization{
   
   # Outputs that will be retained when execution is complete
     output {
-    File result = run_Pileup.result
-    File plotIBD = plot_IBD.plot
+    File pileupPlot = run_Pileup.result
+    File IBDplot = plot_IBD.plot
 
   }
 }
