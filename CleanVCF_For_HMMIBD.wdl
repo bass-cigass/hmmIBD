@@ -39,7 +39,7 @@ task clean {
     docker: "basscigass/hmmibd:1.0.8"
     memory: 32+ " GiB"
     cpu: 8
-    disks: "local-disk 50 HDD"
+    disks: "local-disk 250 HDD"
     preemptible: 0
     }
     
