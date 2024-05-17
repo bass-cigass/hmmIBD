@@ -71,7 +71,7 @@ task DecideMonogenomic {
     File good_mono_samples = "output/good_mono_samples.txt"
     File good_poly_samples = "output/good_poly_samples.txt"
     File good_samples = "output/good_samples.txt"
-    File genotype_data = "seq/thin_seq.txt"
+    File genotype_data = "hmmInput/thin_seq.txt"
     File allele = "seq/allele.txt"
     File hetrate = "results/hetrate.pdf"
     }
