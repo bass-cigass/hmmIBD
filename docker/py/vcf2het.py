@@ -8,10 +8,10 @@ import sys
 def main() :
   kill_indel = False
   # Mininum genotyping call rate to accept variant
-  min_call = 0.80
+  #min_call = 0.80
   # Option: minimum number of alt allele copies to keep variant
   #  (1 = kill monomorphic, 2 = kill singletons)
-  min_copy = 0
+  #min_copy = 0
   min_depth = 5
   
   if len(sys.argv) != 2 : sys.exit('Usage: vcf2het.py <input vcf file name>')
@@ -79,7 +79,8 @@ def main() :
         if form == 'GT' :
           call = genotype[iform]
         elif form == 'DP' :
-          if genotype[iform] == '.' : depth = 0
+          if len(genotype) <= iform : depth = 0
+          elif genotype[iform] == '.' : depth = 0
           else : depth = int(genotype[iform])
           depthsum_persamp[samp] += depth
           triedsum_persamp[samp] += 1

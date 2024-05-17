@@ -11,11 +11,11 @@ import sys
 def main() :
 
   
-  het_thresh = .002   # current definition of polygenomic (try 0.06 for more monogenomics sample)
+  het_thresh = .002   # current definition of polygenomic (try 0.06 for more monogenomics sample) (nhet/ncal)
   if len(sys.argv) == 3 : 
     het_thresh = float(sys.argv[1])
     print('runing heterate with threshold '+str(het_thresh))
-  cover_thresh = 0.25   # current def of good sample -- threshold on fraction of genome >= 5x cover
+  cover_thresh = 0.75   # current def of good sample -- threshold on fraction of genome >= 5x cover
   cols = sns.color_palette("colorblind", n_colors=3)
   
   goutfile = 'output/good_mono_samples.txt'
@@ -55,12 +55,12 @@ def main() :
   for line in hetf :
     pieces = line.rstrip().split()
     samp = pieces[0]
-    if '-' in samp:
-      year = samp.split('-')[2]
-      site = samp.split('-')[1]
-    else :
-      year = samp.split('_')[2]
-      site = samp.split('_')[1]
+    # if '-' in samp:
+    #   year = samp.split('-')[2]
+    #   site = samp.split('-')[1]
+    # else :
+    #   year = samp.split('_')[2]
+    #   site = samp.split('_')[1]
     
     nhet = int(pieces[ idx['N_hetcall'] ])
     ntot = int(pieces[ idx['N_call'] ])
@@ -111,7 +111,7 @@ def main() :
   fig, ax = plt.subplots()
   hets = [float(x) for x in hetrate.values()]
   print(len(hets))
-  ax.hist(x=hets, bins=np.arange(0,0.03,.0006), rwidth=0.85, color=cols[0])
+  ax.hist(x=hets, bins=np.arange(0,0.03,.0005), rwidth=0.85, color=cols[0])
   ax.set_xlabel('Fraction of heterozygous calls')
   ax.set_ylabel('Number of samples')
   ax.set_title('Distribution of het call rate per sample (all samples)')
