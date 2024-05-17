@@ -5,9 +5,9 @@ RUN apk add --no-cache python3 py3-pip
 
 RUN apk add --no-cache python3-dev
 
-RUN pip install matplotlib
-RUN pip install numpy
-RUN pip install seaborn
+RUN pip install matplotlib --break-system-packages
+RUN pip install numpy --break-system-packages
+RUN pip install seaborn --break-system-packages
 copy py py 
 
 Copy ./hmmIBD hmmIBD
