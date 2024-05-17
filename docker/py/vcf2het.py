@@ -80,7 +80,7 @@ def main() :
           call = genotype[iform]
         elif form == 'DP' :
           if len(genotype) <= iform : depth = 0
-          elif genotype[iform] == '.' : depth = 0
+          elif genotype[iform] == '.' : depth = 0 #line 83
           else : depth = int(genotype[iform])
           depthsum_persamp[samp] += depth
           triedsum_persamp[samp] += 1

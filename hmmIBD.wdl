@@ -52,7 +52,7 @@ task remove_sweeps {
     }
     #runtime configuration
     runtime {
-    docker: "basscigass/hmmibd:1.0.8"
+    docker: "basscigass/hmmibd:1.1.0"
     memory: 16+ " GiB"
     disks: "local-disk 50 HDD"
     cpu: 4
