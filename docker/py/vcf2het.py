@@ -6,7 +6,7 @@ import re
 import sys
 
 def main() :
-  kill_indel = False
+  kill_indel = True
   # Mininum genotyping call rate to accept variant
   #min_call = 0.80
   # Option: minimum number of alt allele copies to keep variant
@@ -14,7 +14,7 @@ def main() :
   #min_copy = 0
   min_depth = 5
   
-  if len(sys.argv) != 2 : sys.exit('Usage: vcf2het.py <input vcf file name>')
+  if len(sys.argv) < 2 : sys.exit('Usage: vcf2het.py <input vcf file name>')
   infile = sys.argv[1]
   outfile = 'output/' + 'samp_het.txt'
     
@@ -23,6 +23,10 @@ def main() :
   else :
     inf = open(infile, 'r')
 
+  if len(sys.argv) == 3 :
+    if sys.argv[2]=='False':
+      kill_indel = False
+  print('Kiling Indel :', kill_indel)    
   samples = []
   nindel = 0
   

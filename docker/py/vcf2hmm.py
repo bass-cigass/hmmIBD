@@ -11,7 +11,7 @@ import sys
 def main() :
   # Accept only sites with filter state = 'PASS'
   filter_sites = True
-  kill_indel = True
+  kill_indel = False
   # Mininum genotyping call rate to accept variant
   min_call = 0.80
   min_depth = 0      # minimum read depth to accept a genotype

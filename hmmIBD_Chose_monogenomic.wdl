@@ -38,6 +38,7 @@ task DecideMonogenomic {
     File vcf
     Boolean onlyGoodSamples = true
     Float? het_thresh
+    
     }
     
     command {
@@ -47,7 +48,7 @@ task DecideMonogenomic {
       mkdir -p 'results'
       mkdir -p 'hmmInput'
 
-      python /py/vcf2het.py ~{vcf}
+      python /py/vcf2het.py ~{vcf} 
       python /py/hetrate.py ~{het_thresh} output/samp_het.txt 
       python /py/vcf2hmm.py ~{vcf} ~{false="" true = "output/good_mono_samples.txt" onlyGoodSamples}
       python /py/thin_sites.py "seq/freq.txt" "seq/thinned_Site.txt"
