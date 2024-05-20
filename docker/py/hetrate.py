@@ -36,7 +36,7 @@ def main() :
   pall_outfile = 'output/good_samples.txt'
   pall_outf = open(pall_outfile, 'w')
   
-  hetfile = 'output/samp_het.txt'
+  hetfile = 'output/all_samp_het.txt'
   hetf = open(hetfile, 'r')
   head = hetf.readline().rstrip().split()
   idx = {}
