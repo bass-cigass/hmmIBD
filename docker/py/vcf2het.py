@@ -13,7 +13,7 @@ def main() :
   #  (1 = kill monomorphic, 2 = kill singletons)
   min_depth = 5
 
-  if len(sys.argv) < 3 : sys.exit('Usage: vcf2het.py <input vcf file name> <year or all>')
+  if len(sys.argv) < 3 : sys.exit('Usage: vcf2het.py <input vcf file name> <year or all>: '+len(sys.argv)+ ' parameters are given')
   infile = sys.argv[1]
   target_year = sys.argv[2]
   outfile = 'output/' + target_year + '_samp_het.txt'
