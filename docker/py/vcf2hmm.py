@@ -34,6 +34,7 @@ def main() :
   all_samps = True
   sstr = 'all'
   good_samps = set()
+  print('Sample file:', sampfile)
   if sampfile != None :
     all_samps = False
     sstr = sampfile
