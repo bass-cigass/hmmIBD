@@ -65,7 +65,7 @@ task DecideMonogenomic {
     }
     
     output {
-    File samp_het = "output/samp_het.txt"
+    File samp_het = "output/all_samp_het.txt"
     File all_mono_samples = "output/all_mono_samples.txt"
     File all_poly_samples = "output/all_poly_samples.txt"
     File bad_mono_samples = "output/bad_mono_samples.txt"
