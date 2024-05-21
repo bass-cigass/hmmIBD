@@ -24,10 +24,11 @@ def main() :
   parser.add_argument('-s', '--samp_file', help='Name of file containing names of samples to keep')
   parser.add_argument('-l', '--loci_file', help='Name of file containing variant loci (chrom pos) to keep')
   args = parser.parse_args()
+  out_file = args.out_file
   infile = args.vcf_file
-  seqfile = 'seq/seq.txt'
-  freqfile = 'seq/freq.txt'
-  allfile = 'seq/allele.txt'
+  seqfile = out_file+'_seq.txt'
+  freqfile = out_file+'_freq.txt'
+  allfile = out_file+'_allele.txt'
   sampfile = args.samp_file
   snpfile = args.loci_file
   

@@ -52,7 +52,7 @@ task DecideMonogenomic {
       python /py/vcf2het.py ~{vcf} all
       python /py/hetrate.py ~{het_thresh} output/all_samp_het.txt 
       python /py/vcf2hmm.py ~{vcf} "seq/out" ~{false="" true = " -s output/good_mono_samples.txt" onlyGoodSamples}
-      python /py/thin_sites.py "seq/freq.txt" "seq/thinned_Site.txt"
+      python /py/thin_sites.py "seq/out_freq.txt" "seq/thinned_Site.txt"
       python /py/thin_seq.py "seq/thinned_Site.txt" "seq/out_seq.txt" "hmmInput/thin_seq.txt"
     
     }
@@ -74,8 +74,8 @@ task DecideMonogenomic {
     File good_poly_samples = "output/good_poly_samples.txt"
     File good_samples = "output/good_samples.txt"
     File genotype_data = "hmmInput/thin_seq.txt"
-    File seq = "seq/seq.txt"
-    File allele = "seq/allele.txt"
+    File seq = "seq/out_seq.txt"
+    File allele = "seq/out_allele.txt"
     File hetrate = "results/hetrate.pdf"
     }
 }
