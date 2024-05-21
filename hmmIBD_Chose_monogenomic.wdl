@@ -27,6 +27,7 @@ workflow hmmIBD_Chose_monogenomic{
     File good_samples = DecideMonogenomic.good_samples
     File genotype_data = DecideMonogenomic.genotype_data
     File allele = DecideMonogenomic.allele
+    File seq = DecideMonogenomic.seq
     File hetrate = DecideMonogenomic.hetrate
 
   }
@@ -73,6 +74,7 @@ task DecideMonogenomic {
     File good_poly_samples = "output/good_poly_samples.txt"
     File good_samples = "output/good_samples.txt"
     File genotype_data = "hmmInput/thin_seq.txt"
+    File seq = "seq/seq.txt"
     File allele = "seq/allele.txt"
     File hetrate = "results/hetrate.pdf"
     }
