@@ -35,6 +35,9 @@ def main() :
   all_samps = True
   sstr = 'all'
   good_samps = set()
+  print('Seq file:', seqfile)
+  print('freq file:', freqfile)
+  print('Allele file:', allfile)
   print('Sample file:', sampfile)
   if sampfile != None :
     all_samps = False
