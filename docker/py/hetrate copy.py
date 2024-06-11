@@ -51,34 +51,22 @@ def main() :
   nsamp_poly_all = 0
   nsamp_poly_good = 0
   hetrate = {}
-  hetrate_good = []
-  mean_depth_good = []
-  hetrate_odd = []
-  mean_depth_odd = []
-  fract5x_good = []
-  fract5x_all = []
-  depth5x_list = []
-  year_list = []
-  het_list = []
-  samp_list = []
+  hetrate_good = {}
   for line in hetf :
     pieces = line.rstrip().split()
     samp = pieces[0]
-    if tag != '2019' and 'SEN' not in samp : continue
-    subp = samp.split(samp_sep)
+    # if '-' in samp:
+    #   year = samp.split('-')[2]
+    #   site = samp.split('-')[1]
+    # else :
+    #   year = samp.split('_')[2]
+    #   site = samp.split('_')[1]
+    
+    nhet = int(pieces[ idx['N_hetcall'] ])
     ntot = int(pieces[ idx['N_call'] ])
     if ntot == 0 : continue
-    if do_year : 
-      year = int(subp[year_idx])
-      year_list.append(year)
-    nhet = int(pieces[ idx['N_hetcall'] ])
-    nsnp = int(pieces[ idx['N_snp']])
     f_cover = float(pieces[ idx['depth_gt5x'] ])
     het_fract = nhet / ntot 
-    depth5x_list.append(f_cover)
-    het_list.append(het_fract)
-    samp_list.append(samp)
-    fract5x_all.append(f_cover)
     samp = pieces[ idx['samp'] ]
     if re.search(r'Control', samp) or re.search(r'Ctrl', samp) :
       print('skipping', samp)
@@ -89,9 +77,7 @@ def main() :
       print(samp, file=aoutf)
       nsamp_mono += 1
     if f_cover >= cover_thresh :
-      hetrate_good.append(het_fract)
-      fract5x_good.append(f_cover)
-      mean_depth_good.append( float(pieces[ idx['mean_depth'] ]) )
+      hetrate_good[samp] = het_fract
       nsamp_good += 1
       # coverage > threshold and either poly or mono
       print(samp, file=pall_outf)
@@ -111,8 +97,7 @@ def main() :
       if f_cover >= cover_thresh :
         nsamp_poly_good += 1
         print(samp, file=poutf)
-
-  print('N SNPs:', nsnp)
+    
   print('N samples:', nsamp)
   print('N mono samples:', nsamp_mono)
   print('N good samples:', nsamp_good)
@@ -121,12 +106,12 @@ def main() :
   print('N all poly samples:', nsamp_poly_all)
   print('N bad mono samples:', nsamp_mono_bad)
 
-  pdf_file = 'results/' + tag + '_hetrate.pdf'
+  pdf_file = 'results/hetrate.pdf'
   pp = PdfPages(pdf_file)
-
-  hets = [float(x) for x in hetrate.values()]
   fig, ax = plt.subplots()
-  ax.hist(x=hets, bins=np.arange(0,0.03,.0006), rwidth=0.85, color=cols[0])
+  hets = [float(x) for x in hetrate.values()]
+  print(len(hets))
+  ax.hist(x=hets, bins=np.arange(0,0.03,.0005), rwidth=0.85, color=cols[0])
   ax.set_xlabel('Fraction of heterozygous calls')
   ax.set_ylabel('Number of samples')
   ax.set_title('Distribution of het call rate per sample (all samples)')
@@ -134,66 +119,14 @@ def main() :
   fig.savefig(pp, format='pdf', bbox_inches='tight')
 
   fig1, ax1 = plt.subplots()
-  ax1.hist(x=hetrate_good, bins=np.arange(0,0.03,.0005), rwidth=0.85, color=cols[0])
+  hets_good = [float(x) for x in hetrate_good.values()]
+  print(len(hets_good))
+  ax1.hist(x=hets_good, bins=np.arange(0,0.03,.0005), rwidth=0.85, color=cols[0])
   ax1.set_xlabel('Het call rate')
   ax1.set_ylabel('Number of samples')
-  ax1.set_title('Distribution of het call rate per sample (good samples)')
+  ax1.set_title('Distribution of het call rate per sample (>50% high coverage)')
   fig1.savefig(pp, format='pdf', bbox_inches='tight')
 
-  fig1, ax1 = plt.subplots()
-  ax1.hist(x=mean_depth_good, rwidth=0.85, color=cols[0], bins=np.arange(0, 200, 5))
-  ax1.set_xlabel('Mean depth')
-  ax1.set_ylabel('Number of samples')
-  ax1.set_title('Mean read depth (good samples)')
-  fig1.savefig(pp, format='pdf', bbox_inches='tight')
-
-  fig1, ax1 = plt.subplots()
-  ax1.hist(x=fract5x_all, rwidth=0.85, color=cols[1], bins=np.arange(0, 1, .02))
-  ax1.set_xlabel('Fraction of sites with read depth > 5')
-  ax1.set_ylabel('Number of samples')
-  ax1.set_title('Fraction good coverage')
-  fig1.savefig(pp, format='pdf', bbox_inches='tight')
-
-  if do_year :
-    fig, ax = plt.subplots()
-    ax.scatter(rand_jitter(np.array(year_list), 0.15), depth5x_list, color=cols[0], marker='.', s=3)
-    ax.set_xlabel('Sample year')
-    ax.set_ylabel('Fraction of genome with >5x depth')
-    ax.set_title('Coverage vs year')
-    ax.xaxis.set_major_locator(MaxNLocator(integer=True))
-    fig.savefig(pp, format='pdf', bbox_inches='tight')
-    
-  fig, ax = plt.subplots()
-  ax.scatter(depth5x_list, het_list, color=cols[0], marker='.', s=3)
-  ax.set_ylabel('Het rate')
-  ax.set_xlabel('Fraction of genome with >5x depth')
-  ax.set_title('Het rate vs coverage')
-  ax.set_ylim(top=0.02, bottom=0)
-  fig.savefig(pp, format='pdf', bbox_inches='tight')
-
-  fig, ax = plt.subplots()
-  ax.scatter(depth5x_list, het_list, color=cols[0], marker='.', s=3)
-  ax.set_ylabel('Het rate')
-  ax.set_xlabel('Fraction of genome with >5x depth')
-  ax.set_title('Het rate vs coverage (zoomed in)')
-  ax.set_ylim(top=0.007, bottom = 0)
-  for isamp, samp in enumerate(samp_list) :
-    if het_list[isamp] < 0.0005 and depth5x_list[isamp] > 0.6 and depth5x_list[isamp] < 0.8 :
-      # print(samp, het_list[isamp], depth5x_list[isamp])
-      #f isamp %3 == 0 :
-      ax.annotate(samp, (depth5x_list[isamp], het_list[isamp]), textcoords='offset points', xytext=(0,0), fontsize=1)
-  fig.savefig(pp, format='pdf', bbox_inches='tight')
-
-  fig, ax = plt.subplots()
-  ax.scatter(depth5x_list, het_list, color=cols[0], marker='.', s=3)
-  ax.set_ylabel('Het rate')
-  ax.set_xlabel('Fraction of genome with >5x depth')
-  ax.set_title('Het rate vs coverage (zoomed in)')
-  ax.set_ylim(top=0.007, bottom = 0)
-  for isamp, samp in enumerate(samp_list) :
-    pass
-  fig.savefig(pp, format='pdf', bbox_inches='tight')
-  
   pp.close()
 
 def rand_jitter(l):
