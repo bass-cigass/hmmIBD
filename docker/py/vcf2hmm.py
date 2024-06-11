@@ -14,7 +14,7 @@ def main() :
   kill_indel = False
   # Mininum genotyping call rate to accept variant
   min_call = 0.80
-  min_depth = 0      # minimum read depth to accept a genotype
+  min_depth = 0      # minimum read depth to accept a genotype (min_depth = 5  delete the site with low depth)
   # Option: minimum number of minor allele copies to keep variant
   #  (1 = kill monomorphic, 2 = kill singletons)
   min_copy = 0

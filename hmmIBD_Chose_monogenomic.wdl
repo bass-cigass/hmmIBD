@@ -76,6 +76,7 @@ task DecideMonogenomic {
     File genotype_data = "hmmInput/thin_seq.txt"
     File seq = "seq/out_seq.txt"
     File allele = "seq/out_allele.txt"
+    File freq = "seq/out_freq.txt.txt"
     File hetrate = "results/hetrate.pdf"
     }
 }
