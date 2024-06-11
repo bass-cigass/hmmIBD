@@ -27,6 +27,7 @@ workflow hmmIBD_Chose_monogenomic{
     File good_samples = DecideMonogenomic.good_samples
     File genotype_data = DecideMonogenomic.genotype_data
     File allele = DecideMonogenomic.allele
+    File seq = DecideMonogenomic.freq
     File seq = DecideMonogenomic.seq
     File hetrate = DecideMonogenomic.hetrate
 
