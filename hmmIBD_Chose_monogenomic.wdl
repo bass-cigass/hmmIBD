@@ -51,7 +51,7 @@ task DecideMonogenomic {
       mkdir -p 'hmmInput'
 
       python /py/vcf2het.py ~{vcf} all
-      python /py/hetrate.py ~{het_thresh} output/all_samp_het.txt 
+      python /py/hetrate.py ~{het_thresh} all output/all_samp_het.txt 
       python /py/vcf2hmm.py ~{vcf} "seq/out" ~{false="" true = " -s output/good_mono_samples.txt" onlyGoodSamples}
       python /py/thin_sites.py "seq/out_freq.txt" "seq/thinned_Site.txt"
       python /py/thin_seq.py "seq/thinned_Site.txt" "seq/out_seq.txt" "hmmInput/thin_seq.txt"
