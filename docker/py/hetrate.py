@@ -10,12 +10,12 @@ import sys
 
 def main() :
 
-  if len(sys.argv) != 2 :
+  if len(sys.argv) < 2 :
     sys.exit('usage: hetrate.py takes at least 1 arg: gives the <tag>')
   tag = sys.argv[1]
   het_thresh = .002   # current definition of polygenomic (try 0.06 for more monogenomics sample) (nhet/ncal)
   if len(sys.argv) == 3 : 
-    het_thresh = float(sys.argv[1])
+    het_thresh = float(sys.argv[2])
     print('runing heterate with threshold '+str(het_thresh))
   cover_thresh = 0.75   # current def of good sample -- threshold on fraction of genome >= 5x cover
   cols = sns.color_palette("colorblind", n_colors=3)

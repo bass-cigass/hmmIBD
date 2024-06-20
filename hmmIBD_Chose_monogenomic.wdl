@@ -55,7 +55,7 @@ task DecideMonogenomic {
       mkdir -p 'hmmInput'
 
       python /py/vcf2het.py ~{vcf} ~{target_year}
-      python /py/hetrate.py ~{het_thresh} ~{target_year} 
+      python /py/hetrate.py ~{target_year} ~{het_thresh}
       #uncomment and debug the line below for the case of all sample
       #python /py/vcf2hmm.py ~{vcf} 'seq/out' ~{false='' true='output dir' onlyGoodSamples}
       python /py/vcf2hmm.py ~{vcf} 'seq/out' ~{outdir} 
