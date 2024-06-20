@@ -7,6 +7,7 @@ workflow hmmIBD_Chose_monogenomic{
     File vcfFile
     Float? het_thresh
     Boolean onlyGoodSamples = true
+    String year = 'all'
     
   }
   call DecideMonogenomic{
@@ -50,8 +51,8 @@ task DecideMonogenomic {
       mkdir -p 'results'
       mkdir -p 'hmmInput'
 
-      python /py/vcf2het.py ~{vcf} all
-      python /py/hetrate.py ~{het_thresh} all 
+      python /py/vcf2het.py ~{vcf} year
+      python /py/hetrate.py ~{het_thresh} year 
       python /py/vcf2hmm.py ~{vcf} "seq/out" ~{false="" true = " -s output/good_mono_samples.txt" onlyGoodSamples}
       python /py/thin_sites.py "seq/out_freq.txt" "seq/thinned_Site.txt"
       python /py/thin_seq.py "seq/thinned_Site.txt" "seq/out_seq.txt" "hmmInput/thin_seq.txt"
@@ -67,17 +68,17 @@ task DecideMonogenomic {
     }
     
     output {
-    File samp_het = "output/all_samp_het.txt"
-    File all_mono_samples = "output/all_mono_samples.txt"
-    File all_poly_samples = "output/all_poly_samples.txt"
-    File bad_mono_samples = "output/bad_mono_samples.txt"
-    File good_mono_samples = "output/good_mono_samples.txt"
-    File good_poly_samples = "output/good_poly_samples.txt"
-    File good_samples = "output/good_samples.txt"
+    File samp_het = "output/+"year"+_samp_het.txt"
+    File all_mono_samples = "output/+"year"+_mono_samples.txt"
+    File all_poly_samples = "output/+"year"+_poly_samples.txt"
+    File bad_mono_samples = "output/+"year"+bad_mono_samples.txt"
+    File good_mono_samples = "output/+"year"+good_mono_samples.txt"
+    File good_poly_samples = "output/+"year"+good_poly_samples.txt"
+    File good_samples = "output/+"year"+good_samples.txt"
     File genotype_data = "hmmInput/thin_seq.txt"
     File seq = "seq/out_seq.txt"
     File allele = "seq/out_allele.txt"
     File freq = "seq/out_freq.txt"
-    File hetrate = "results/hetrate.pdf"
+    File hetrate = "results/+"year"+_hetrate.pdf"
     }
 }

@@ -131,7 +131,7 @@ def main() :
   print('N all poly samples:', nsamp_poly_all)
   print('N bad mono samples:', nsamp_mono_bad)
 
-  pdf_file = 'results/' + tag + 'hetrate.pdf'
+  pdf_file = 'results/' + tag + '_hetrate.pdf'
   pp = PdfPages(pdf_file)
 
   hets = [float(x) for x in hetrate.values()]
