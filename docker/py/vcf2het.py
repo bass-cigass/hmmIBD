@@ -16,8 +16,10 @@ def main() :
   if len(sys.argv) < 3 : sys.exit('Usage: vcf2het.py <input vcf file name> <year or all>: '+len(sys.argv)+ ' parameters are given')
   infile = sys.argv[1]
   target_year = sys.argv[2]
-  outfile = 'output/' + target_year + '_samp_het.txt'
+  outfile = 'output/' + target_year + '_samp_het.txt' #'output/'+tag+'_samp_het.txt'
   depthfile = 'output/' + target_year + '_hetdepth.txt'
+
+
   
   if re.search(r'\.gz$', infile) :
     inf = gzip.open(infile, 'rt')

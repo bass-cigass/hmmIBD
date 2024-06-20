@@ -11,7 +11,7 @@ import sys
 def main() :
 
   if len(sys.argv) != 2 :
-    sys.exit('usage: hetrate.py <tag>')
+    sys.exit('usage: hetrate.py takes at least 1 arg: gives the <tag>')
   tag = sys.argv[1]
   het_thresh = .002   # current definition of polygenomic (try 0.06 for more monogenomics sample) (nhet/ncal)
   if len(sys.argv) == 3 : 
@@ -28,25 +28,25 @@ def main() :
   
   #end steve adds
   
-  goutfile = 'output/good_mono_samples.txt'
+  goutfile = 'output/'+tag+'good_mono_samples.txt'
   goutf = open(goutfile, 'w')
 
-  aoutfile = 'output/all_mono_samples.txt'
+  aoutfile = 'output/'+tag+'_mono_samples.txt'
   aoutf = open(aoutfile, 'w')
 
-  bmoutfile = 'output/bad_mono_samples.txt'
+  bmoutfile = 'output/'+tag+'bad_mono_samples.txt'
   bmoutf = open(bmoutfile, 'w')
 
-  apoutfile = 'output/all_poly_samples.txt'
+  apoutfile = 'output/'+tag+'_poly_samples.txt'
   apoutf = open(apoutfile, 'w')
   
-  poutfile = 'output/good_poly_samples.txt'
+  poutfile = 'output/'+tag+'good_poly_samples.txt'
   poutf = open(poutfile, 'w')
 
-  pall_outfile = 'output/good_samples.txt'
+  pall_outfile = 'output/'+tag+'good_samples.txt'
   pall_outf = open(pall_outfile, 'w')
   
-  hetfile = 'output/all_samp_het.txt'
+  hetfile = 'output/'+tag+'_samp_het.txt'
   hetf = open(hetfile, 'r')
   head = hetf.readline().rstrip().split()
   idx = {}
