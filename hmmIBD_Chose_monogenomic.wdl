@@ -70,7 +70,7 @@ task DecideMonogenomic {
     }
     
     output {
-    File samp_het = "output/"+target_year"+_samp_het.txt"
+    File samp_het = "output/"+target_year+"_samp_het.txt"
     File all_mono_samples = "output/"+target_year+"_mono_samples.txt"
     File all_poly_samples = "output/"+target_year+"_poly_samples.txt"
     File bad_mono_samples = "output/"+target_year+"bad_mono_samples.txt"
