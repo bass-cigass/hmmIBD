@@ -14,7 +14,7 @@ workflow hmmIBD_Chose_monogenomic{
     input: 
     vcf = vcfFile,
     onlyGoodSamples = onlyGoodSamples,
-    het_thresh = het_thresh
+    het_thresh = het_thresh,
     target_year = year
   }
 
