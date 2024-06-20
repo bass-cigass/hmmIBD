@@ -55,7 +55,7 @@ task DecideMonogenomic {
 
       python /py/vcf2het.py ~{vcf} ~{target_year}
       python /py/hetrate.py ~{het_thresh} ~{target_year} 
-      python /py/vcf2hmm.py ~{vcf} "seq/out" ~{false="" true = " -s output/~{target_year}_good_mono_samples.txt" onlyGoodSamples}
+      python /py/vcf2hmm.py ~{vcf} "seq/out" ~{false="" true = " -s output/"+target_year+"_good_mono_samples.txt" onlyGoodSamples}
       python /py/thin_sites.py "seq/out_freq.txt" "seq/thinned_Site.txt"
       python /py/thin_seq.py "seq/thinned_Site.txt" "seq/out_seq.txt" "hmmInput/thin_seq.txt"
     
