@@ -28,22 +28,22 @@ def main() :
   
   #end steve adds
   
-  goutfile = 'output/'+tag+'good_mono_samples.txt'
+  goutfile = 'output/'+tag+'_good_mono_samples.txt'
   goutf = open(goutfile, 'w')
 
   aoutfile = 'output/'+tag+'_mono_samples.txt'
   aoutf = open(aoutfile, 'w')
 
-  bmoutfile = 'output/'+tag+'bad_mono_samples.txt'
+  bmoutfile = 'output/'+tag+'_bad_mono_samples.txt'
   bmoutf = open(bmoutfile, 'w')
 
   apoutfile = 'output/'+tag+'_poly_samples.txt'
   apoutf = open(apoutfile, 'w')
   
-  poutfile = 'output/'+tag+'good_poly_samples.txt'
+  poutfile = 'output/'+tag+'_good_poly_samples.txt'
   poutf = open(poutfile, 'w')
 
-  pall_outfile = 'output/'+tag+'good_samples.txt'
+  pall_outfile = 'output/'+tag+'_good_samples.txt'
   pall_outf = open(pall_outfile, 'w')
   
   hetfile = 'output/'+tag+'_samp_het.txt'

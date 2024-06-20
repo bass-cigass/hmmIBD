@@ -55,7 +55,7 @@ task DecideMonogenomic {
 
       python /py/vcf2het.py ~{vcf} ~{target_year}
       python /py/hetrate.py ~{het_thresh} ~{target_year} 
-      python /py/vcf2hmm.py ~{vcf} "seq/out" ~{false="" true = " -s output/"+target_year+"good_mono_samples.txt" onlyGoodSamples}
+      python /py/vcf2hmm.py ~{vcf} "seq/out" ~{false="" true = " -s output/~{target_year}_good_mono_samples.txt" onlyGoodSamples}
       python /py/thin_sites.py "seq/out_freq.txt" "seq/thinned_Site.txt"
       python /py/thin_seq.py "seq/thinned_Site.txt" "seq/out_seq.txt" "hmmInput/thin_seq.txt"
     
@@ -70,17 +70,17 @@ task DecideMonogenomic {
     }
     
     output {
-    File samp_het = "output/"target_year"_samp_het.txt"
-    File all_mono_samples = "output/"target_year"_mono_samples.txt"
-    File all_poly_samples = "output/"target_year"_poly_samples.txt"
-    File bad_mono_samples = "output/"target_year"bad_mono_samples.txt"
-    File good_mono_samples = "output/"target_year"good_mono_samples.txt"
-    File good_poly_samples = "output/"target_year"good_poly_samples.txt"
-    File good_samples = "output/"target_year"good_samples.txt"
+    File samp_het = "output/~{target_year}_samp_het.txt"
+    File all_mono_samples = "output/~{target_year}_mono_samples.txt"
+    File all_poly_samples = "output/~{target_year}_poly_samples.txt"
+    File bad_mono_samples = "output/~{target_year}_bad_mono_samples.txt"
+    File good_mono_samples = "output/~{target_year}_good_mono_samples.txt"
+    File good_poly_samples = "output/~{target_year}_good_poly_samples.txt"
+    File good_samples = "output/~{target_year}_good_samples.txt"
     File genotype_data = "hmmInput/thin_seq.txt"
     File seq = "seq/out_seq.txt"
     File allele = "seq/out_allele.txt"
     File freq = "seq/out_freq.txt"
-    File hetrate = "results/"target_year"_hetrate.pdf"
+    File hetrate = "results/~{target_year}_hetrate.pdf"
     }
 }
