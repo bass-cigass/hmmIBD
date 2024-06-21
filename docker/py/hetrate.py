@@ -1,6 +1,8 @@
 #!/usr/local/bin/python3
 
 from collections import Counter
+import gzip
+from matplotlib.ticker import MaxNLocator
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 import numpy as np
