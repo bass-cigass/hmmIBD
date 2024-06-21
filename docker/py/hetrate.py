@@ -206,11 +206,12 @@ def main() :
   
   pp.close()
 
-def rand_jitter(l):
-  stdev = .01*(max(l)-min(l))
+def rand_jitter(l, sd):
+  return l + np.random.randn(len(l)) * sd
+
+#def rand_jitter(l):
+#  stdev = .01*(max(l)-min(l))
 #  stdev = .15
-  return l + np.random.randn(len(l)) * stdev
-
-
+#  return l + np.random.randn(len(l)) * stdev
 
 main()
