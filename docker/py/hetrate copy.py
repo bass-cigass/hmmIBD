@@ -137,6 +137,4 @@ def rand_jitter(l, sd):
 #  stdev = .15
 #  return l + np.random.randn(len(l)) * stdev
 
-
-
 main()
