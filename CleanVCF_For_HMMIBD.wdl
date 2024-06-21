@@ -36,7 +36,7 @@ task clean {
     }
     
     runtime {
-    docker: "basscigass/hmmibd:1.1.0"
+    docker: "basscigass/hmmibd:1.1.9"
     memory: 32+ " GiB"
     cpu: 8
     disks: "local-disk 250 HDD"

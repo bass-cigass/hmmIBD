@@ -65,7 +65,7 @@ task DecideMonogenomic {
     }
     
     runtime {
-    docker: "basscigass/hmmibd:1.1.0"
+    docker: "basscigass/hmmibd:1.1.9"
     memory: 64+ " GiB"
     cpu: 16
     disks: "local-disk 100 HDD"
