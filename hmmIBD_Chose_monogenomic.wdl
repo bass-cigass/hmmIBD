@@ -58,7 +58,7 @@ task DecideMonogenomic {
       python /py/hetrate.py ~{target_year} ~{het_thresh}
       #uncomment and debug the line below for the case of all sample
       #python /py/vcf2hmm.py ~{vcf} 'seq/out' ~{false='' true='output dir' onlyGoodSamples}
-      python /py/vcf2hmm.py ~{vcf} 'seq/out' ~{outdir} 
+      python /py/vcf2hmm_st.py ~{vcf} 'seq/out' ~{outdir} 
       python /py/thin_sites.py "seq/out_freq.txt" "seq/thinned_Site.txt"
       python /py/thin_seq.py "seq/thinned_Site.txt" "seq/out_seq.txt" "hmmInput/thin_seq.txt"
     
