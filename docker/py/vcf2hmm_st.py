@@ -26,9 +26,9 @@ def main() :
   args = parser.parse_args()
   infile = args.vcf_file
   filebase = args.out_file
-  seqfile = f'{filebase}_seq.txt'
-  freqfile = f'{filebase}_freq.txt'
-  allfile = f'{filebase}_allele.txt'
+  seqfile = filebase+'_seq.txt'
+  freqfile = filebase+'_freq.txt'
+  allfile = filebase+'_allele.txt'
   sampfile = args.samp_file
   snpfile = args.loci_file
   
