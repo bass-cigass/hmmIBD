@@ -9,24 +9,24 @@ workflow hmmIBD{
     String output_pfx = "hmm" 
   }
   #Calling task remove_sweeps 
- call remove_sweeps {
-  input:
-    infile = genotype_data,
-    output_file = "sweeps_removed_seq.txt"
-  }
-  if (defined(freqData))  { 
-      call remove_sweeps as sweeps_removed_freq {
-    input:
-      infile = freqData,
-      output_file = "sweeps_removed_freq.txt"
+ #call remove_sweeps {
+  #input:
+  #  infile = genotype_data,
+   # output_file = "sweeps_removed_seq.txt"
+  #}
+  #if (defined(freqData))  { 
+  #    call remove_sweeps as sweeps_removed_freq {
+  #  input:
+   #   infile = freqData,
+   #   output_file = "sweeps_removed_freq.txt"
 
-    }
-  }
+   # }
+  #}
 #Calling task run_hmmIBD 
   call run_hmmIBD {
     input:
-    data = remove_sweeps.sweeps_removed,
-    freqData = if defined(freqData) then sweeps_removed_freq.sweeps_removed else freqData,
+    data = genotype_data,
+    #freqData = if defined(freqData) then freqData else freqData,
     output_pfx = output_pfx
     }
   
@@ -75,7 +75,10 @@ task run_hmmIBD {
     }
     command {
     set -euxo pipefail #if any of the command fails then the entire worfklow fails
-    hmmIBD -i ~{data} ~{'-f '+freqData} -o ~{output_pfx}
+    # hmmIBD -i seq/{tag}_thinned_seq.txt -m 10 -n 10 -o output/{tag}_thinned '
+    #-f for a small set if freqdata are available.
+    #hmmIBD -i ~{data} ~{'-f '+freqData} -m 10 -n 10 -o ~{output_pfx}
+    hmmIBD -i ~{data} -m 10 -n 10 -o ~{output_pfx}
     }
     
     runtime {
