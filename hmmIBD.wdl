@@ -75,9 +75,10 @@ task run_hmmIBD {
     }
     command {
     set -euxo pipefail #if any of the command fails then the entire worfklow fails
-    # hmmIBD -i seq/{tag}_thinned_seq.txt -m 10 -n 10 -o output/{tag}_thinned '
-    #-f for a small set if freqdata are available.
-    #hmmIBD -i ~{data} ~{'-f '+freqData} -m 10 -n 10 -o ~{output_pfx}
+    ### hmmIBD -i seq/\{tag\}_thinned_seq.txt -m 10 -n 10 -o output/\{tag\}_thinned '
+    ### -f for a small set if freqdata are available.
+    ### hmmIBD -i ~{data} ~{'-f '+freqData} -m 10 -n 10 -o ~{output_pfx}
+
     hmmIBD -i ~{data} -m 10 -n 10 -o ~{output_pfx}
     }
     
