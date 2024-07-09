@@ -67,7 +67,7 @@ task plot_IBD {
     }
     
     runtime {
-    docker: "basscigass/hmmibd:1.0.8"
+    docker: "basscigass/hmmibd:1.1.9"
     memory: 8+ " GiB"
     disks: "local-disk 50 HDD"
     cpu: 4
