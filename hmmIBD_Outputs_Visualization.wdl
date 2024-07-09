@@ -6,6 +6,7 @@ workflow hmmIBD_Outputs_Visualization{
   input {
     File hmm_File
     File hmm_fract_File
+    File locus
     
   }
 
@@ -13,6 +14,7 @@ workflow hmmIBD_Outputs_Visualization{
     input: 
     hmm_File = hmm_File,
     hmm_fract_File = hmm_fract_File,
+    locus_gene = locus
   }
   call plot_IBD{
     input: 
@@ -31,12 +33,13 @@ task run_Pileup {
     input {
     File hmm_File
     File hmm_fract_File
+    File locus_gene
      
     }
     command {
     set -euxo pipefail #if any of the command fails then the entire worfklow fails
     mkdir -p 'output'
-    python /py/pileup.py ~{hmm_File} ~{hmm_fract_File} "output/result_plot.pdf"
+    python /py/pileup_st.py ~{hmm_File} ~{hmm_fract_File} "output/result_plot.pdf" ~{locus_gene}
     }
     
     runtime {
