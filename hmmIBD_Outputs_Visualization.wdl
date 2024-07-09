@@ -25,6 +25,7 @@ workflow hmmIBD_Outputs_Visualization{
     output {
     File pileupPlot = run_Pileup.result
     File IBDplot = plot_IBD.plot
+    File pileup = run_Pileup.resulttxt
 
   }
 }
@@ -39,11 +40,11 @@ task run_Pileup {
     command {
     set -euxo pipefail #if any of the command fails then the entire worfklow fails
     mkdir -p 'output'
-    python /py/pileup_st.py ~{hmm_File} ~{hmm_fract_File} "output/result_plot.pdf" ~{locus_gene}
+    python /py/pileup_st.py "all" ~{hmm_File} ~{hmm_fract_File} "output/result_plot.pdf" ~{locus_gene}
     }
     
     runtime {
-    docker: "basscigass/hmmibd:1.0.8"
+    docker: "basscigass/hmmibd:1.1.9"
     memory: 8+ " GiB"
     disks: "local-disk 50 HDD"
     cpu: 4
@@ -52,6 +53,7 @@ task run_Pileup {
     
     output {
     File result = "output/result_plot.pdf"
+    File resulttxt = 'output/all.pileup.txt'
     
     }
 }
