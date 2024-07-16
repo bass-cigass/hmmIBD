@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/local/bin/python3
 
 from collections import Counter
 import sys
@@ -6,8 +6,8 @@ import sys
 def main() :
   min_space = 50
   min_freq = 0.005
-  binsize = 2000 # size of the windows in which no more than max_per_bin is allowed
-  max_per_bin = 12 
+  binsize = 2000
+  max_per_bin = 12
   if len(sys.argv) != 3 : sys.exit('usage: thin_sites.py <input freq file> <output file of good sites>')
   outf = open(sys.argv[2], 'w')
   
