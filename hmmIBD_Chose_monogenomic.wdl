@@ -32,6 +32,7 @@ workflow hmmIBD_Chose_monogenomic{
     File freq = DecideMonogenomic.freq
     File seq = DecideMonogenomic.seq
     File hetrate = DecideMonogenomic.hetrate
+    File thinnedSites = DecideMonogenomic.thinnedSite
 
   }
 }
@@ -85,5 +86,6 @@ task DecideMonogenomic {
     File allele = "seq/out_allele.txt"
     File freq = "seq/out_freq.txt"
     File hetrate = "results/~{target_year}_hetrate.pdf"
+    File thinnedSite = "seq/thinned_Site.txt"
     }
 }
